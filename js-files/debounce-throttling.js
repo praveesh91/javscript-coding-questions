@@ -5,10 +5,20 @@ inputEl.addEventListener("input", debounceFn);
 function debounce(fn, delay) {
   let timeoutId;
   return function (...args) {
-    let context = this;
-    console.log(this);
-
     clearTimeout(timeoutId);
-    timeoutId = setTimeout(() => fn.apply(context, args), delay);
+    timeoutId = setTimeout(() => fn.apply(this, args), delay);
+  };
+}
+
+let myThrottle = throttle(() => console.log("demo"), 2000);
+window.addEventListener("mousemove", myThrottle);
+
+function throttle(fn, delay) {
+  let start = 0;
+  return function (...args) {
+    let now = new Date().getTime();
+    if (now - start < delay) return;
+    start = now;
+    return fn.apply(this, args);
   };
 }
