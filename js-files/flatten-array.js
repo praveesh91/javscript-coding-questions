@@ -1,5 +1,5 @@
 const arr = [1, 2, [3, 4, [5, 6]]];
-
+console.log("flat", arr.flat());
 console.log(flattenArr(arr));
 
 function flattenArr(arr) {
