@@ -1,4 +1,4 @@
-function sum(a, b) {
+function sum(a) {
   return function (b) {
     if (b === undefined) {
       return a;
@@ -11,6 +11,8 @@ function sum(a, b) {
 
 function curry(func) {
   return function curried(...args) {
+    console.log({ args }, func.length);
+
     if (args.length >= func.length) {
       return func(...args);
     } else {
@@ -24,4 +26,4 @@ function curry(func) {
 const sumCurry = (a, b, c) => a + b + c;
 
 const curriedSum = curry(sumCurry);
-console.log(curriedSum(1)(6)(5));
+console.log(curriedSum(1)(2)(3));
