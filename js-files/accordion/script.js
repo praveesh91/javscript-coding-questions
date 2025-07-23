@@ -18,8 +18,9 @@ document.addEventListener("DOMContentLoaded", () => {
     sectionItem.appendChild(accordionHeader);
     sectionItem.appendChild(accordionBody);
     accordion.appendChild(sectionItem);
+
     if (index === 0) {
-      sectionItem.style.display = "block";
+      accordionBody.style.display = "block";
       accordionHeader.classList.add("active");
     }
   });

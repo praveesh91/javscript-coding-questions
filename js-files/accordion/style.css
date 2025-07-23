@@ -1,0 +1,15 @@
+.accordion {
+  border: 1px solid;
+}
+.accordion-item {
+  border-bottom: 1px solid #eee;
+}
+.accordion-header {
+  background-color: #e6e2e2;
+  cursor: pointer;
+  padding: 8px 12px;
+}
+.accordion-body {
+  display: none;
+  padding: 8px 15px;
+}
