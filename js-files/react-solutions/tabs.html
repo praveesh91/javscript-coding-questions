@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabs React App</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+
+<style>
+    .container {
+        text-align: center;
+        font-family: 'Arial', 'sans-serif';
+        max-width: 800px;
+        margin: 50px auto;
+        padding: 20px
+    }
+
+    .tabBtn {
+        border: 1px solid #a4a2a2;
+        padding: 8px 12px;
+        text-transform: capitalize;
+        background: #c9c7c7;
+        cursor: pointer;
+    }
+
+    .tabContent .inactive {
+        display: none;
+    }
+
+    .tabContent .active {
+        display: block;
+    }
+</style>
+
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        function App() {
+            const tabs = [
+                { tabName: "tab 1", id: 1, tabContent: "This is tab 1 content" },
+                { tabName: "tab 2", id: 2, tabContent: "This is tab 2 content" },
+                { tabName: "tab 3", id: 3, tabContent: "This is tab 3 content" },
+            ];
+            const [tabIndex, setTabIndex] = React.useState(1)
+            const handleSelect = (index) => {
+                setTabIndex(index + 1);
+
+            }
+            return (
+                <div className='container'>
+                    {tabs.map((tab, index) =>
+                        <button key={tab.index} onClick={() => handleSelect(index)} className="tabBtn">{tab.tabName}</button>
+                    )}
+                    {tabs.map((tab, index) => <div key={tab.index} className="tabContent">
+                        <div className={`${tabIndex === tab.id ? 'active' : 'inactive'}`} >
+                            <p>{tab.tabContent}</p>
+                        </div>
+                    </div>
+                    )}
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+
+</html>
