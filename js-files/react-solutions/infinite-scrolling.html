@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infinite Scroll React App</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        function App() {
+            const [allproducts, setAllproducts] = React.useState([]);
+            const [loading, setLoading] = React.useState(false);
+            const [hasMore, setHasMore] = React.useState(true);
+            const [page, setPage] = React.useState(1);
+
+            // Ref for the sentinel element (invisible element at bottom)
+            const sentinelRef = React.useRef(null);
+
+            // Fetch data function
+            const getData = async () => {
+                if (loading || !hasMore) return;
+
+                setLoading(true);
+                try {
+                    const res = await fetch(`https://dummyjson.com/products?limit=${page * 20}`)
+                    const productsList = await res.json()
+                    // Check if we've loaded all products
+                    if (productsList.products.length > 100) {
+                        setHasMore(false);
+                    }
+
+                    setAllproducts(productsList.products)
+                    setPage(prev => prev + 1)
+
+                } catch (error) {
+                    console.log("Error fetching data", error);
+                } finally {
+                    setLoading(false);
+                }
+            }
+
+            // Intersection Observer for infinite scroll
+            React.useEffect(() => {
+                const observer = new IntersectionObserver((entries) => {
+                    if (entries[0].isIntersecting && hasMore) {
+                        getData();
+                    }
+                }, {
+                    root: null, // viewport
+                    rootMargin: "100px", // trigger 100px before element is visible
+                    threshold: 0.1
+                });
+
+                if (sentinelRef.current) {
+                    observer.observe(sentinelRef.current);
+                }
+
+                return () => {
+                    if (sentinelRef.current) {
+                        observer.unobserve(sentinelRef.current);
+                    }
+                };
+            }, [hasMore, loading, page]);
+
+            // Initial data load
+            React.useEffect(() => {
+                getData();
+            }, []);
+
+            return (
+                <div style={{
+                    textAlign: 'center',
+                    marginTop: '50px',
+                    fontFamily: 'Arial, sans-serif',
+                    maxWidth: '800px',
+                    margin: '50px auto',
+                    padding: '20px'
+                }}>
+                    <h1>🛍️ Product List</h1>
+                    <p>Total Products: {allproducts.length}</p>
+
+                    <div style={{
+                        display: 'grid',
+                        gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
+                        gap: '20px',
+                        marginTop: '20px'
+                    }}>
+                        {allproducts.map((product) => (
+                            <div
+                                key={product.id}
+                                style={{
+                                    border: '1px solid #ddd',
+                                    padding: '15px',
+                                    borderRadius: '8px',
+                                    textAlign: 'left',
+                                    boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+                                }}
+                            >
+                                <h3 style={{ margin: '0 0 10px 0', fontSize: '16px' }}>
+                                    {product.title}
+                                </h3>
+                                <p style={{ color: '#666', margin: '5px 0' }}>
+                                    ${product.price}
+                                </p>
+                                <p style={{
+                                    color: '#888',
+                                    fontSize: '14px',
+                                    margin: '5px 0'
+                                }}>
+                                    Rating: {product.rating} ⭐
+                                </p>
+                            </div>
+                        ))}
+                    </div>
+
+                    {/* Sentinel element for intersection observer */}
+                    <div
+                        ref={sentinelRef}
+                        style={{
+                            height: '20px',
+                            margin: '20px 0',
+                        }}
+                    >
+                        {loading && (
+                            <div style={{ textAlign: 'center', padding: '20px' }}>
+                                <p> Loading more products... </p>
+                            </div>
+                        )}
+                        {!hasMore && allproducts.length > 0 && (
+                            <div style={{ textAlign: 'center', padding: '20px', color: '#666' }}>
+                                <p> 🎉 You've reached the end! </p>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+
+</html>
