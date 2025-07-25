@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accordion React App</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+
+<style>
+    .accordion {
+        border: 1px solid #efefef;
+    }
+
+    .accordionHeader {
+        display: flex;
+        justify-content: space-between;
+        background-color: #e4e2e2;
+        align-items: center;
+        padding-right: 10px;
+    }
+
+    .accordionHeader button {
+        padding: 12px;
+        width: 100%;
+        cursor: pointer;
+        border: none;
+        border-bottom: 1px #eee;
+        text-align: start;
+
+    }
+
+    .accordionContent {
+        padding: 0 10px;
+    }
+
+    .accordionContent .inactive {
+        display: none;
+    }
+
+    .accordionContent .active {
+        display: block;
+    }
+</style>
+
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        function App() {
+
+            const data = [
+                { id: 1, name: "Accordion 1", content: "First accordion content." },
+                { id: 2, name: "Accordion 2", content: "Second accordion content." },
+                { id: 3, name: "Accordion 3", content: "Third accordion content." },
+            ];
+            const [accordionIndex, setAccordionIndex] = React.useState(0)
+            const handleSelect = (index) => {
+                setAccordionIndex(accordionIndex === index ? null : index);
+            }
+            return (
+                <div className='container'>
+                    {data.map((accordion, index) =>
+                        <div className="accordion" key={accordion.id}>
+                            <div className={`accordionHeader ${accordionIndex === index ? 'active' : 'inactive'}`}>
+                                <button onClick={() => handleSelect(index)} >{accordion.name}</button>
+                                {accordionIndex === index ? <span>🔼</span> : <span>🔽</span>}
+
+                            </div>
+                            <div className="accordionContent">
+                                <div className={`${accordionIndex === index ? 'active' : 'inactive'}`} >
+                                    <p>{accordion.content}</p>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+
+</html>
