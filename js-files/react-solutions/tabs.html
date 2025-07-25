@@ -23,8 +23,27 @@
         border: 1px solid #a4a2a2;
         padding: 8px 12px;
         text-transform: capitalize;
-        background: #c9c7c7;
         cursor: pointer;
+        border-bottom: none;
+    }
+
+    .tabBtn.active {
+        background: #aaa8a8;
+    }
+
+    .tabBtn.inactive {
+        background: #c9c7c7;
+    }
+
+    .btnContainer {
+        display: flex;
+        justify-content: start;
+        margin-bottom: -1px;
+    }
+
+    .tabContent {
+        border-top: none;
+        border: 1px solid #efefef;
     }
 
     .tabContent .inactive {
@@ -53,15 +72,18 @@
             }
             return (
                 <div className='container'>
-                    {tabs.map((tab, index) =>
-                        <button key={tab.index} onClick={() => handleSelect(index)} className="tabBtn">{tab.tabName}</button>
-                    )}
-                    {tabs.map((tab, index) => <div key={tab.index} className="tabContent">
-                        <div className={`${tabIndex === tab.id ? 'active' : 'inactive'}`} >
-                            <p>{tab.tabContent}</p>
-                        </div>
+                    <div className="btnContainer">
+                        {tabs.map((tab, index) =>
+                            <button key={tab.id} onClick={() => handleSelect(index)} className={`tabBtn ${tabIndex === tab.id ? 'active' : 'inactive'}`}>{tab.tabName}</button>
+                        )}
                     </div>
-                    )}
+                    <div className="tabContent">
+                        {tabs.map((tab, index) =>
+                            <div key={tab.id} className={`${tabIndex === tab.id ? 'active' : 'inactive'}`} >
+                                <p>{tab.tabContent}</p>
+                            </div>
+                        )}
+                    </div>
                 </div>
             );
         }
