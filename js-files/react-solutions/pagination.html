@@ -64,11 +64,14 @@
             }, [page]);
 
             const handlePrev = () => {
-                setPage(prev => prev - 1)
+                if (page > 1) {
+                    setPage(prev => prev - 1)
+                }
 
             }
             const handleNext = () => {
-                setPage(prev => prev + 1)
+                if (page < allProducts.length / itemsPerPage)
+                    setPage(prev => prev + 1)
             }
 
             const handleChange = (page) => {
