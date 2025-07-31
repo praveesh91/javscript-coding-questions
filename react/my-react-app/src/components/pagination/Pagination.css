@@ -1,0 +1,12 @@
+.pagination {
+  display: flex;
+}
+
+button {
+  padding: 8px 12px;
+  border: 1px solid #fefefe;
+}
+
+button.active {
+  background-color: #d8d0d0;
+}

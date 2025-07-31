@@ -1,4 +1,5 @@
 import "./App.css";
+import Pagination from "./components/pagination/Pagination";
 import useNotification from "./hooks/use-notification";
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
         Notify
       </button>
       {NotificationComponent}
+      <Pagination />
     </>
   );
 }
