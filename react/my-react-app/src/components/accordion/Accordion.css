@@ -1,0 +1,32 @@
+.accordion {
+  border: 1px solid #efefef;
+}
+
+.accordionHeader {
+  display: flex;
+  justify-content: space-between;
+  background-color: #e4e2e2;
+  align-items: center;
+  padding-right: 10px;
+}
+
+.accordionHeader button {
+  padding: 12px;
+  width: 100%;
+  cursor: pointer;
+  border: none;
+  border-bottom: 1px #eee;
+  text-align: start;
+}
+
+.accordionContent {
+  padding: 0 10px;
+}
+
+.accordionContent .inactive {
+  display: none;
+}
+
+.accordionContent .active {
+  display: block;
+}

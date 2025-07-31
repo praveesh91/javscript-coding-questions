@@ -1,4 +1,5 @@
 import "./App.css";
+import Accordion from "./components/accordion/Accordion";
 import Pagination from "./components/pagination/Pagination";
 import useNotification from "./hooks/use-notification";
 
@@ -19,6 +20,7 @@ function App() {
       </button>
       {NotificationComponent}
       <Pagination />
+      <Accordion />
     </>
   );
 }
