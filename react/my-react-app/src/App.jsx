@@ -1,6 +1,7 @@
 import "./App.css";
 import Accordion from "./components/accordion/Accordion";
 import Pagination from "./components/pagination/Pagination";
+import Progressbar from "./components/progressbar/Progressbar";
 import Tab from "./components/tab/Tab";
 import useNotification from "./hooks/use-notification";
 
@@ -8,7 +9,7 @@ function App() {
   const { NotificationComponent, triggerNotification } = useNotification();
   return (
     <>
-      <button
+      {/* <button
         onClick={() =>
           triggerNotification({
             message: "Your notification",
@@ -22,7 +23,8 @@ function App() {
       {NotificationComponent}
       <Pagination />
       <Accordion />
-      <Tab />
+      <Tab /> */}
+      <Progressbar maxValue={200} duration={5000} />
     </>
   );
 }

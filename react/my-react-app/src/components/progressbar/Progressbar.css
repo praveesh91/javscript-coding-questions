@@ -1,0 +1,22 @@
+.progressbar {
+  width: 300px;
+  height: 10px;
+  border-radius: 5px;
+  background-color: #efefef;
+  margin: auto;
+  display: block;
+}
+
+.progressActive {
+  background-color: green;
+  height: 10px;
+  border-radius: 5px;
+}
+
+.progressText {
+  display: block;
+  text-align: center;
+  margin-top: 10px;
+  font-weight: bold;
+  color: #333;
+}
