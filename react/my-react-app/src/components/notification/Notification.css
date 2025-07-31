@@ -1,0 +1,47 @@
+.notification {
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgb(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  margin: 10px;
+  color: white;
+}
+.closeBtn {
+  margin-left: 5px;
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+}
+.success {
+  background-color: green;
+}
+.info {
+  background-color: blue;
+}
+.warning {
+  background-color: yellow;
+}
+.error {
+  background-color: red;
+}
+.top-right {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+}
+.top-left {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+}
+.bottom-right {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}
+.bottom-left {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+}

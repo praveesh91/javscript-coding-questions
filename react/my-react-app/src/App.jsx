@@ -1,18 +1,22 @@
 import "./App.css";
-import withCounter from "./component-types/withCounter.jsx";
-import Counter from "./component-types/Counter.jsx";
-import Lifecycle from "./Lifecycle.jsx";
-import UseEffectHook from "./UseEffectHook.jsx";
-import UseRefHook from "./UseRefHook.jsx";
+import useNotification from "./hooks/use-notification";
 
-const EnhancedCOunter = withCounter(Counter);
 function App() {
+  const { NotificationComponent, triggerNotification } = useNotification();
   return (
     <>
-      {/* <EnhancedCOunter /> */}
-      {/* <Lifecycle /> */}
-      {/* <UseEffectHook /> */}
-      <UseRefHook />
+      <button
+        onClick={() =>
+          triggerNotification({
+            message: "Your notification",
+            duration: 3000,
+            type: "success",
+          })
+        }
+      >
+        Notify
+      </button>
+      {NotificationComponent}
     </>
   );
 }
