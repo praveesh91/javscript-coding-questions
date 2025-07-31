@@ -21,6 +21,10 @@ const Progressbar = ({ maxValue = 100, duration = 300 }) => {
     <div className="progressbar">
       <div
         className="progressActive"
+        role="progressbar"
+        aria-valuemax={100}
+        aria-valuemin={100}
+        aria-valuenow={`${(value / maxValue) * 100}`}
         style={{ width: `${(value / maxValue) * 100}%` }}
       ></div>
       <span className="progressText">
