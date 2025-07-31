@@ -1,6 +1,7 @@
 import "./App.css";
 import Accordion from "./components/accordion/Accordion";
 import Pagination from "./components/pagination/Pagination";
+import Tab from "./components/tab/Tab";
 import useNotification from "./hooks/use-notification";
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
       {NotificationComponent}
       <Pagination />
       <Accordion />
+      <Tab />
     </>
   );
 }
