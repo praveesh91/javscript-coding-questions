@@ -3,6 +3,7 @@ import Accordion from "./components/accordion/Accordion";
 import Pagination from "./components/pagination/Pagination";
 import Progressbar from "./components/progressbar/Progressbar";
 import Tab from "./components/tab/Tab";
+import Virtualisation from "./components/virtualisation/Virtualisation";
 import useNotification from "./hooks/use-notification";
 
 function App() {
@@ -24,7 +25,8 @@ function App() {
       <Pagination />
       <Accordion />
       <Tab /> */}
-      <Progressbar maxValue={200} duration={5000} />
+      {/* <Progressbar maxValue={200} duration={5000} /> */}
+      <Virtualisation />
     </>
   );
 }
