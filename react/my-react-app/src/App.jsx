@@ -1,5 +1,6 @@
 import "./App.css";
 import Accordion from "./components/accordion/Accordion";
+import Carousel from "./components/carousel/Carousel";
 import Pagination from "./components/pagination/Pagination";
 import Progressbar from "./components/progressbar/Progressbar";
 import Tab from "./components/tab/Tab";
@@ -26,7 +27,8 @@ function App() {
       <Accordion />
       <Tab /> */}
       {/* <Progressbar maxValue={200} duration={5000} /> */}
-      <Virtualisation />
+      {/* <Virtualisation /> */}
+      <Carousel />
     </>
   );
 }
