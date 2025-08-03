@@ -7,10 +7,18 @@ const MemoryGame = () => {
   const [solved, setSolved] = useState([]);
   const [disabled, setDisabled] = useState(false);
   const [won, setWon] = useState(false);
+  const [moves, setMoves] = useState(0);
+  const [maxMoves, setMaxMoves] = useState(5);
+  const [gameover, setGameover] = useState(false);
 
   const handleGridsizeChange = (e) => {
     const size = parseInt(e.target.value);
     if (size >= 2 && size <= 10) setGridsize(size);
+  };
+
+  const handleChangeMaxmoves = (e) => {
+    const size = parseInt(e.target.value);
+    if (size >= 0) setMaxMoves(size);
   };
 
   const initialiseGame = () => {
@@ -29,11 +37,13 @@ const MemoryGame = () => {
     setSolved([]);
     setDisabled(false);
     setWon(false);
+    setGameover(false);
+    setMoves(0);
   };
 
   useEffect(() => {
     initialiseGame();
-  }, [gridsize]);
+  }, [gridsize, maxMoves]);
 
   const checkMatch = (secondId) => {
     const [firstId] = flipped;
@@ -50,15 +60,17 @@ const MemoryGame = () => {
   };
 
   const handleClick = (id) => {
-    if (disabled || won) return;
+    if (disabled || gameover) return;
     if (flipped.length === 0) {
       setFlipped([id]);
+      setMoves(moves + 1);
       return;
     }
     if (flipped.length === 1) {
       setDisabled(true);
       if (flipped[0]?.id !== id) {
         setFlipped([...flipped, id]);
+        setMoves(moves + 1);
         checkMatch(id);
       } else {
         setFlipped([]);
@@ -73,28 +85,48 @@ const MemoryGame = () => {
   useEffect(() => {
     if (solved.length === cards.length && cards.length > 0) {
       setWon(true);
+      setGameover(true);
+    } else if (maxMoves > 0 && moves >= maxMoves) {
+      setGameover(true);
     }
-  }, [solved, cards]);
+  }, [solved, cards, moves, maxMoves]);
 
   const reset = () => initialiseGame();
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
       <h1 className="text-3xl font-bold mb-6">Memory game</h1>
-      <div className="mb-4">
-        <label htmlFor="gridSize" className="mb-2 mr-2">
-          Grid size (max 10)
-        </label>
-        <input
-          type="number"
-          id="gridSize"
-          min={2}
-          max={10}
-          value={gridsize}
-          className="border-2 border-gray-300 rounded px-2 py-1"
-          onChange={handleGridsizeChange}
-        />
+
+      <div className="mb-4 flex space-x-4">
+        <div>
+          <label htmlFor="gridSize" className="mb-2 mr-2">
+            Grid size (max 10)
+          </label>
+          <input
+            type="number"
+            id="gridSize"
+            min={2}
+            max={10}
+            value={gridsize}
+            onChange={handleGridsizeChange}
+            className="border-2 border-gray-300 rounded px-2 py-1 w-16"
+          />
+        </div>
+        <div>
+          <label htmlFor="maxMoves" className="mb-2 mr-2">
+            Max moves (max 10)
+          </label>
+          <input
+            type="number"
+            id="maxMoves"
+            min={0}
+            value={maxMoves}
+            onChange={handleChangeMaxmoves}
+            className="border-2 border-gray-300 rounded px-2 py-1 w-16"
+          />
+        </div>
       </div>
+      <p className="mb-4">Moves {`${moves}/${maxMoves}`}</p>
       <div
         className={`grid gap-2 mb-2`}
         style={{
@@ -110,7 +142,7 @@ const MemoryGame = () => {
                   ? `bg-green-500 text-white`
                   : `bg-blue-500 text-white`
                 : ` bg-gray-300 text-gray-400`
-            }`}
+            }${gameover ? `pointer-events-none` : ``}`}
             key={el.id}
             onClick={() => handleClick(el.id)}
           >
@@ -119,8 +151,14 @@ const MemoryGame = () => {
         ))}
       </div>
       <div>
-        {won && (
-          <p className="mt-4 text-4xl text-green-600 animate-bounce">You won</p>
+        {gameover && (
+          <p
+            className={`mt-4 text-4xl animate-bounce ${
+              won ? "text-green-600 " : `text-red-600`
+            }`}
+          >
+            {won ? "You won" : "Reset"}
+          </p>
         )}
       </div>
       <button
