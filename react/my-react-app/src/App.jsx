@@ -1,6 +1,7 @@
 import "./App.css";
 import Accordion from "./components/accordion/Accordion";
 import Carousel from "./components/carousel/Carousel";
+import MemoryGame from "./components/memory-game/MemoryGame";
 import Pagination from "./components/pagination/Pagination";
 import Progressbar from "./components/progressbar/Progressbar";
 import Tab from "./components/tab/Tab";
@@ -28,7 +29,8 @@ function App() {
       <Tab /> */}
       {/* <Progressbar maxValue={200} duration={5000} /> */}
       {/* <Virtualisation /> */}
-      <Carousel />
+      {/* <Carousel /> */}
+      <MemoryGame />
     </>
   );
 }
