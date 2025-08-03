@@ -157,7 +157,7 @@ const MemoryGame = () => {
               won ? "text-green-600 " : `text-red-600`
             }`}
           >
-            {won ? "You won" : "Reset"}
+            {won ? "You won" : "Game over"}
           </p>
         )}
       </div>
