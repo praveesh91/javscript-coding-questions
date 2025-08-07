@@ -4,6 +4,7 @@ import Carousel from "./components/carousel/Carousel";
 import MemoryGame from "./components/memory-game/MemoryGame";
 import Pagination from "./components/pagination/Pagination";
 import Progressbar from "./components/progressbar/Progressbar";
+import StarRating from "./components/start-rating/StarRating";
 import Tab from "./components/tab/Tab";
 import TicTacToe from "./components/tictactoe/TicTacToe";
 import Virtualisation from "./components/virtualisation/Virtualisation";
@@ -32,7 +33,8 @@ function App() {
       {/* <Virtualisation /> */}
       {/* <Carousel /> */}
       {/* <MemoryGame /> */}
-      <TicTacToe />
+      {/* <TicTacToe /> */}
+      <StarRating />
     </>
   );
 }
