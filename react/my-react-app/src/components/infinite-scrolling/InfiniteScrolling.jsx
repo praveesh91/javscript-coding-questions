@@ -14,12 +14,43 @@ const InfiniteScrolling = () => {
       const res = await request.json();
       setLoading(false);
       setProducts(res);
+      setPage((prevPage) => prevPage + 1);
     } catch (error) {
       setLoading(false);
     } finally {
       setLoading(false);
     }
   };
+
+  function throttle(cb, delay) {
+    let last = 0;
+    return function (...args) {
+      let now = new Date().getTime();
+      if (now - last < delay) return;
+      last = now;
+      return cb(...args);
+    };
+  }
+
+  const handleScroll = throttle(() => {
+    if (
+      window.innerHeight + document.documentElement.scrollTop + 1000 >
+        document.documentElement.offsetHeight &&
+      !loading
+    ) {
+      getData();
+    }
+  }, 500);
+
+  useEffect(() => {
+    console.log("useffect");
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [handleScroll]);
 
   useEffect(() => {
     getData();
@@ -30,11 +61,12 @@ const InfiniteScrolling = () => {
     <div className="grid grid-cols-3 gap-4">
       {products?.products?.map((el) => (
         <div key={el.id} className="bg-gray-100 p-3">
-          <img src={el.thumbnail} alt="" srcset="" />
+          <img src={el.thumbnail} alt={el.title} />
           <h2 className="text-lg font-semibold mb-2">{el.title}</h2>
           <p>{el.description}</p>
         </div>
       ))}
+      {loading && <p>Loading</p>}
     </div>
   );
 };
