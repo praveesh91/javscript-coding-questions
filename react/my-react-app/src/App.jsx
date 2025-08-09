@@ -1,6 +1,7 @@
 import "./App.css";
 import Accordion from "./components/accordion/Accordion";
 import Carousel from "./components/carousel/Carousel";
+import InfiniteScrolling from "./components/infinite-scrolling/InfiniteScrolling";
 import MemoryGame from "./components/memory-game/MemoryGame";
 import Pagination from "./components/pagination/Pagination";
 import Progressbar from "./components/progressbar/Progressbar";
@@ -34,7 +35,8 @@ function App() {
       {/* <Carousel /> */}
       {/* <MemoryGame /> */}
       {/* <TicTacToe /> */}
-      <StarRating />
+      {/* <StarRating /> */}
+      <InfiniteScrolling />
     </>
   );
 }
