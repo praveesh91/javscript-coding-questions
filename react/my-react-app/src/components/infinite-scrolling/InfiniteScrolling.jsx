@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 const InfiniteScrolling = () => {
   const [loading, setLoading] = useState(false);
   const [products, setProducts] = useState([]);
   const [page, setPage] = useState(3);
+  let hasRun = useRef(true);
 
   const getData = async () => {
     try {
@@ -21,6 +22,11 @@ const InfiniteScrolling = () => {
       setLoading(false);
     }
   };
+
+  if (hasRun.current) {
+    getData();
+    hasRun.current = false;
+  }
 
   function throttle(cb, delay) {
     let last = 0;
@@ -43,19 +49,11 @@ const InfiniteScrolling = () => {
   }, 500);
 
   useEffect(() => {
-    console.log("useffect");
-
     window.addEventListener("scroll", handleScroll);
-
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, [handleScroll]);
-
-  useEffect(() => {
-    getData();
-    return () => {};
-  }, []);
 
   return (
     <div className="grid grid-cols-3 gap-4">
