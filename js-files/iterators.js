@@ -1,4 +1,4 @@
-// Arrays, strings, maos, sets are already iterable, but if you have to iterate through an object we need an iterator
+// Arrays, strings, maps, sets are already iterable, but if you have to iterate through an object we need an iterator
 // It is done by creating a [Symbol.iterator] function which will return a next method which inturn returns an object {done:<bool>, value?:<any>}
 
 const sampleObj = {
