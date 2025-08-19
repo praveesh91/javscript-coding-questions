@@ -10,6 +10,7 @@ import Tab from "./components/tab/Tab";
 import TicTacToe from "./components/tictactoe/TicTacToe";
 import Virtualisation from "./components/virtualisation/Virtualisation";
 import useNotification from "./hooks/use-notification";
+import Typeahead from "./components/autocomplete";
 
 function App() {
   const { NotificationComponent, triggerNotification } = useNotification();
@@ -26,17 +27,18 @@ function App() {
       >
         Notify
       </button>
-      {NotificationComponent}
-      <Pagination />
-      <Accordion />
-      <Tab /> */}
+      {NotificationComponent} */}
+      {/* <Pagination /> */}
+      {/* <Accordion /> */}
+      {/* <Tab /> */}
       {/* <Progressbar maxValue={200} duration={5000} /> */}
       {/* <Virtualisation /> */}
       {/* <Carousel /> */}
       {/* <MemoryGame /> */}
       {/* <TicTacToe /> */}
       {/* <StarRating /> */}
-      <InfiniteScrolling />
+      {/* <InfiniteScrolling /> */}
+      <Typeahead />
     </>
   );
 }
