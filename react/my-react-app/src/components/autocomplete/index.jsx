@@ -22,7 +22,7 @@ const index = () => {
         placeholder=""
         fetchSuggestions={fetchSuggestions}
         dataKey=""
-        customeLoading={<>Loading ...</>}
+        customLoading={<>Loading recipes...</>}
         onSelect={() => {}}
         onChange={() => {}}
         onBlur={() => {}}

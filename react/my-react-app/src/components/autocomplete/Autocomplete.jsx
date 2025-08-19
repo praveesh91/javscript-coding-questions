@@ -1,13 +1,14 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import SuggestionsList from "./SuggestionsList";
+import { useDebounce } from "../../hooks/useDebounce";
 
 const Autocomplete = ({
   staticData,
   placeholder = "",
   fetchSuggestions,
   dataKey = "",
-  customeLoading = "Loading ...",
+  customLoading,
   onSelect = () => {},
   onChange = () => {},
   onBlur = () => {},
@@ -15,31 +16,36 @@ const Autocomplete = ({
   customStyles = {},
 }) => {
   const [inputValue, setInputValue] = useState("");
-  const [suggestions, setsuggestions] = useState([]);
+  const [suggestions, setSuggestions] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  const debouncedInput = useDebounce(inputValue);
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
     onChange(e.target.value);
   };
 
-  const getSuggestions = async (query) => {
+  const getSuggestions = async () => {
     setLoading(true);
     setError(null);
     try {
       let result;
       if (staticData.length > 0) {
         result = staticData.filter((item) => {
-          return item.toLowercase().includes(item.toLowercase());
+          return item.name.toLowercase().includes(item.toLowercase());
         });
       } else {
-        result = await fetchSuggestions(query);
+        result = await fetchSuggestions(debouncedInput);
+        if (dataKey && result[dataKey]) {
+          result = result[dataKey];
+        }
       }
-      setsuggestions(result);
+      setSuggestions(result);
     } catch (error) {
       setError("Failed to fetch suggestions");
-      setsuggestions([]);
+      setSuggestions([]);
     } finally {
       setLoading(false);
     }
@@ -49,15 +55,21 @@ const Autocomplete = ({
     if (inputValue.length > 0) {
       getSuggestions(inputValue);
     } else {
-      setsuggestions([]);
+      setSuggestions([]);
     }
     return () => {};
-  }, [inputValue]);
+  }, [debouncedInput]);
 
   const handleSuggestionClick = (selectedSuggestion) => {
     onSelect(selectedSuggestion);
-    setsuggestions([]);
+    setInputValue(selectedSuggestion.name);
+    setSuggestions([]);
+    setLoading(false);
+    setError(null);
   };
+
+  const shouldShowDropdown =
+    inputValue.length > 0 && (loading || suggestions.length > 0 || error);
 
   return (
     <div className="relative w-64">
@@ -70,14 +82,20 @@ const Autocomplete = ({
         onBlur={onBlur}
         onFocus={onFocus}
       />
-      {(suggestions?.length > 0 || loading || error) && (
-        <ul className="absolute left-0 top-full mt-1 w-full border border-gray-300 bg-white rounded shadow">
-          <SuggestionsList
-            suggestionsList={suggestions}
-            selectedSuggestion={(el) => handleSuggestionClick(el)}
-          />
-          {error && <div>{error}</div>}
-          {loading && <div>{loading}</div>}
+      {shouldShowDropdown && (
+        <ul className="absolute left-0 top-full mt-1 w-full border border-gray-300 bg-white rounded shadow-lg max-h-60 overflow-y-auto z-10">
+          {error ? (
+            <li className="px-4 py-2 text-red-600">{error}</li>
+          ) : loading ? (
+            <li className="px-4 py-2 text-gray-500">
+              {customLoading || "Loading..."}
+            </li>
+          ) : (
+            <SuggestionsList
+              suggestionsList={suggestions}
+              selectedSuggestion={handleSuggestionClick}
+            />
+          )}
         </ul>
       )}
     </div>
