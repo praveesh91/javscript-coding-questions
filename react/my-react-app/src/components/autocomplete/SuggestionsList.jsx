@@ -8,7 +8,7 @@ const SuggestionsList = ({ suggestionsList, selectedSuggestion }) => {
           className="px-3 py-2 hover:bg-gray-100 cursor-pointer"
           onClick={() => selectedSuggestion(suggestion)}
         >
-          {el.name}
+          {suggestion.name}
         </li>
       ))}
     </>
