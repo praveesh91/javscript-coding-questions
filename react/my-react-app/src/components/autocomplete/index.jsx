@@ -19,7 +19,7 @@ const index = () => {
     <div>
       <Autocomplete
         staticData={data}
-        placeholder=""
+        placeholder="Search for recipies"
         fetchSuggestions={fetchSuggestions}
         dataKey=""
         customLoading={<>Loading recipes...</>}
