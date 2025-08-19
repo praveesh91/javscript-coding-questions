@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
+import SuggestionsList from "./SuggestionsList";
 
 const Autocomplete = ({
   staticData,
@@ -36,7 +37,6 @@ const Autocomplete = ({
         result = await fetchSuggestions(query);
       }
       setsuggestions(result);
-      console.log(suggestions);
     } catch (error) {
       setError("Failed to fetch suggestions");
       setsuggestions([]);
@@ -54,10 +54,12 @@ const Autocomplete = ({
     return () => {};
   }, [inputValue]);
 
+  console.log({ suggestions });
+
   return (
-    <div>
+    <div className="relative w-64">
       <input
-        className="border rounded p-1"
+        className="w-full border border-gray-300 rounded px-3 py-2"
         type="text"
         placeholder={placeholder}
         value={inputValue}
@@ -65,8 +67,16 @@ const Autocomplete = ({
         onBlur={onBlur}
         onFocus={onFocus}
       />
-      {error && <div>{error}</div>}
-      {loading && <div>{loading}</div>}
+      {(suggestions?.length > 0 || loading || error) && (
+        <ul className="absolute left-0 top-full mt-1 w-full border border-gray-300 bg-white rounded shadow">
+          <SuggestionsList
+            suggestionsList={suggestions}
+            selectedSuggestion={() => {}}
+          />
+          {error && <div>{error}</div>}
+          {loading && <div>{loading}</div>}
+        </ul>
+      )}
     </div>
   );
 };
