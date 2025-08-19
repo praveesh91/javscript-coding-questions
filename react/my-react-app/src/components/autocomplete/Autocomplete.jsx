@@ -54,7 +54,10 @@ const Autocomplete = ({
     return () => {};
   }, [inputValue]);
 
-  console.log({ suggestions });
+  const handleSuggestionClick = (selectedSuggestion) => {
+    onSelect(selectedSuggestion);
+    setsuggestions([]);
+  };
 
   return (
     <div className="relative w-64">
@@ -71,7 +74,7 @@ const Autocomplete = ({
         <ul className="absolute left-0 top-full mt-1 w-full border border-gray-300 bg-white rounded shadow">
           <SuggestionsList
             suggestionsList={suggestions}
-            selectedSuggestion={() => {}}
+            selectedSuggestion={(el) => handleSuggestionClick(el)}
           />
           {error && <div>{error}</div>}
           {loading && <div>{loading}</div>}
