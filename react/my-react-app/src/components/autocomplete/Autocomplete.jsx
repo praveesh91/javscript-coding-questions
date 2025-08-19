@@ -94,6 +94,7 @@ const Autocomplete = ({
             <SuggestionsList
               suggestionsList={suggestions}
               selectedSuggestion={handleSuggestionClick}
+              highlightInput={inputValue}
             />
           )}
         </ul>
