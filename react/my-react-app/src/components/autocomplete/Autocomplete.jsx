@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import SuggestionsList from "./SuggestionsList";
 import { useDebounce } from "../../hooks/useDebounce";
+import useCache from "../../hooks/useCache";
 
 const Autocomplete = ({
   staticData,
@@ -20,6 +21,8 @@ const Autocomplete = ({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  const { setCache, getCache } = useCache("autocomplete", 36000);
+
   const debouncedInput = useDebounce(inputValue);
 
   const handleInputChange = (e) => {
@@ -28,26 +31,32 @@ const Autocomplete = ({
   };
 
   const getSuggestions = async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      let result;
-      if (staticData.length > 0) {
-        result = staticData.filter((item) => {
-          return item.name.toLowercase().includes(item.toLowercase());
-        });
-      } else {
-        result = await fetchSuggestions(debouncedInput);
-        if (dataKey && result[dataKey]) {
-          result = result[dataKey];
+    const cachedSuggestions = getCache(inputValue);
+    if (cachedSuggestions) {
+      setSuggestions(cachedSuggestions);
+    } else {
+      setLoading(true);
+      setError(null);
+      try {
+        let result;
+        if (staticData.length > 0) {
+          result = staticData.filter((item) => {
+            return item.name.toLowercase().includes(item.toLowercase());
+          });
+        } else {
+          result = await fetchSuggestions(debouncedInput);
+          if (dataKey && result[dataKey]) {
+            result = result[dataKey];
+          }
         }
+        setSuggestions(result);
+        setCache(inputValue, result);
+      } catch (error) {
+        setError("Failed to fetch suggestions");
+        setSuggestions([]);
+      } finally {
+        setLoading(false);
       }
-      setSuggestions(result);
-    } catch (error) {
-      setError("Failed to fetch suggestions");
-      setSuggestions([]);
-    } finally {
-      setLoading(false);
     }
   };
 
