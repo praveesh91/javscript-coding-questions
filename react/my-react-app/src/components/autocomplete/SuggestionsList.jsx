@@ -4,6 +4,7 @@ const SuggestionsList = ({
   suggestionsList,
   selectedSuggestion,
   highlightInput,
+  selectedIndex,
 }) => {
   const getHighlightedText = (text, highlight = "") => {
     const regex = new RegExp(`(${highlight})`, "gi");
@@ -27,11 +28,14 @@ const SuggestionsList = ({
 
   return (
     <>
-      {suggestionsList.map((suggestion) => (
+      {suggestionsList.map((suggestion, index) => (
         <li
+          id={`suggestion-${index}`}
+          role="option"
           key={suggestion.id}
           className="px-3 py-2 hover:bg-gray-100 cursor-pointer"
           onClick={() => selectedSuggestion(suggestion)}
+          aria-selected={index === selectedIndex}
         >
           {getHighlightedText(suggestion.name, highlightInput)}
         </li>

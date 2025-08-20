@@ -20,6 +20,7 @@ const Autocomplete = ({
   const [suggestions, setSuggestions] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [selectedIndex, setSelectedIndex] = useState(-1);
 
   const { setCache, getCache } = useCache("autocomplete", 36000);
 
@@ -90,9 +91,16 @@ const Autocomplete = ({
         onChange={handleInputChange}
         onBlur={onBlur}
         onFocus={onFocus}
+        aria-autocomplete="list"
+        aria-controls="dropdownList"
+        aria-activedescendant={`suggestion-${selectedIndex}`}
       />
       {shouldShowDropdown && (
-        <ul className="absolute left-0 top-full mt-1 w-full border border-gray-300 bg-white rounded shadow-lg max-h-60 overflow-y-auto z-10">
+        <ul
+          id="dropdownList"
+          role="listbox"
+          className="absolute left-0 top-full mt-1 w-full border border-gray-300 bg-white rounded shadow-lg max-h-60 overflow-y-auto z-10"
+        >
           {error ? (
             <li className="px-4 py-2 text-red-600">{error}</li>
           ) : loading ? (
@@ -101,6 +109,7 @@ const Autocomplete = ({
             </li>
           ) : (
             <SuggestionsList
+              selectedIndex={selectedIndex}
               suggestionsList={suggestions}
               selectedSuggestion={handleSuggestionClick}
               highlightInput={inputValue}
