@@ -1,0 +1,31 @@
+{
+  "polls": [
+    {
+      "id": 41,
+      "question": "What do you think of the course?",
+      "totalCount": 23,
+      "options": [
+        {
+          "id": 83,
+          "title": "Excellent",
+          "votes": 11
+        },
+        {
+          "id": 84,
+          "title": "Good",
+          "votes": 53
+        },
+        {
+          "id": 85,
+          "title": "Could be better",
+          "votes": 23
+        },
+        {
+          "id": 88,
+          "title": "Bad",
+          "votes": 33
+        }
+      ]
+    }
+  ]
+}
