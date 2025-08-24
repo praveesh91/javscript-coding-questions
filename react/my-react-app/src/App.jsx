@@ -11,6 +11,7 @@ import TicTacToe from "./components/tictactoe/TicTacToe";
 import Virtualisation from "./components/virtualisation/Virtualisation";
 import useNotification from "./hooks/use-notification";
 import Typeahead from "./components/autocomplete";
+import Poll from "./components/poll-widget";
 
 function App() {
   const { NotificationComponent, triggerNotification } = useNotification();
@@ -38,7 +39,8 @@ function App() {
       {/* <TicTacToe /> */}
       {/* <StarRating /> */}
       {/* <InfiniteScrolling /> */}
-      <Typeahead />
+      {/* <Typeahead /> */}
+      <Poll />
     </>
   );
 }
