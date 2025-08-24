@@ -45,6 +45,14 @@ const PollWidget: React.FC<PollProps> = ({
     }
   }, [pollId]);
 
+  const totalVotes = currentOption.reduce(
+    (acc, option) => acc + option.votes,
+    0
+  );
+
+  const handleVote = () => {};
+  const removeVote = () => {};
+
   return (
     <fieldset role="group" style={styles?.container}>
       <legend style={styles?.title}>{title}</legend>
@@ -55,6 +63,8 @@ const PollWidget: React.FC<PollProps> = ({
         }}
       >
         {currentOption.map((option) => {
+          const percentage =
+            totalVotes > 0 ? (option.votes / totalVotes) * 100 : 0;
           return (
             <div>
               <div>
@@ -65,11 +75,31 @@ const PollWidget: React.FC<PollProps> = ({
                   />
                   <span>{option.title}</span>
                 </label>
+                {selectedOptions.length > 0 && (
+                  <span>
+                    {option.votes}votes {percentage.toFixed(1)}
+                  </span>
+                )}
+              </div>
+              <div
+                className="w-full bg-gray-200 rounded-full h-2"
+                style={styles?.progressBar}
+              >
+                {selectedOptions.length > 0 && (
+                  <div
+                    className="bg-blue-500 h-full rounded-full transform origin-left"
+                    style={{
+                      ...styles?.progressBarFill,
+                      transform: `scale(${percentage / 100})`,
+                    }}
+                  ></div>
+                )}
               </div>
             </div>
           );
         })}
       </div>
+      {selectedOptions.length > 0 && <button>Remove vote</button>}
     </fieldset>
   );
 };
