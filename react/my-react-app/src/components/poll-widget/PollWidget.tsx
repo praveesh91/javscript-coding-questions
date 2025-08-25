@@ -50,8 +50,27 @@ const PollWidget: React.FC<PollProps> = ({
     0
   );
 
-  const handleVote = () => {};
-  const removeVote = () => {};
+  const handleVote = async (optionId: number) => {
+    let newSelectedOptions: number[];
+    if (isMultiple) {
+    } else {
+      newSelectedOptions = [optionId];
+      if (selectedOptions.length > 0 && selectedOptions[0] == optionId) {
+        const updatedOptions = await onVoteRemove(pollId, newSelectedOptions);
+        setcurrentOption(updatedOptions);
+      }
+      const updatedOptions = await onVote(pollId, newSelectedOptions);
+      setcurrentOption(updatedOptions);
+    }
+    setSelectedOptions(newSelectedOptions);
+    localStorage.setItem(`poll=${pollId}`, JSON.stringify(newSelectedOptions));
+  };
+  const removeVote = async () => {
+    const upadtedOptions = await onVoteRemove(pollId, selectedOptions);
+    setSelectedOptions([]);
+    localStorage.removeItem(`poll-${pollId}`);
+    setcurrentOption(upadtedOptions);
+  };
 
   return (
     <fieldset role="group" style={styles?.container}>
@@ -70,7 +89,10 @@ const PollWidget: React.FC<PollProps> = ({
               <div>
                 <label htmlFor="">
                   <input
+                    id={`option-${option.id}`}
                     type={isMultiple ? "checkbox" : "radio"}
+                    onChange={() => handleVote(option.id)}
+                    checked={selectedOptions.includes(option.id)}
                     style={styles?.optionsInput}
                   />
                   <span>{option.title}</span>
@@ -99,7 +121,9 @@ const PollWidget: React.FC<PollProps> = ({
           );
         })}
       </div>
-      {selectedOptions.length > 0 && <button>Remove vote</button>}
+      {selectedOptions.length > 0 && (
+        <button onClick={removeVote}>Remove vote</button>
+      )}
     </fieldset>
   );
 };
