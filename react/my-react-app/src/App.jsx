@@ -12,6 +12,7 @@ import Virtualisation from "./components/virtualisation/Virtualisation";
 import useNotification from "./hooks/use-notification";
 import Typeahead from "./components/autocomplete";
 import Poll from "./components/poll-widget";
+import ReactFeatures from "./components/react-features/ReactFeatures";
 
 function App() {
   const { NotificationComponent, triggerNotification } = useNotification();
@@ -40,7 +41,8 @@ function App() {
       {/* <StarRating /> */}
       {/* <InfiniteScrolling /> */}
       {/* <Typeahead /> */}
-      <Poll />
+      {/* <Poll /> */}
+      <ReactFeatures />
     </>
   );
 }
