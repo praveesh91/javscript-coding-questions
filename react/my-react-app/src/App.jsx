@@ -13,6 +13,7 @@ import useNotification from "./hooks/use-notification";
 import Typeahead from "./components/autocomplete";
 import Poll from "./components/poll-widget";
 import ReactFeatures from "./components/react-features/ReactFeatures";
+import Otp from "./components/otp/Otp";
 
 function App() {
   const { NotificationComponent, triggerNotification } = useNotification();
@@ -42,7 +43,8 @@ function App() {
       {/* <InfiniteScrolling /> */}
       {/* <Typeahead /> */}
       {/* <Poll /> */}
-      <ReactFeatures />
+      {/* <ReactFeatures /> */}
+      <Otp />
     </>
   );
 }
