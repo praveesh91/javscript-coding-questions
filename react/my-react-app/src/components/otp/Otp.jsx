@@ -9,6 +9,13 @@ const Otp = ({ otpLength = 6 }) => {
     const key = event.key;
     const copyOtpFields = [...otpFields];
 
+    if (key === "ArrowRight" && index < otpFields.length - 1) {
+      ref.current[index + 1].focus();
+    }
+    if (key === "ArrowLeft" && index > 0) {
+      ref.current[index - 1].focus();
+    }
+
     if (key === "Backspace") {
       copyOtpFields[index] = "";
       setOtpFields(copyOtpFields);
