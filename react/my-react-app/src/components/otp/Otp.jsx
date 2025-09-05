@@ -49,6 +49,7 @@ const Otp = ({ otpLength = 6 }) => {
             value={el}
             type="text"
             onKeyDown={(event) => handleKeydown(event, index)}
+            aria-label={`Digit ${index + 1} of ${otpLength}`}
           />
         );
       })}
