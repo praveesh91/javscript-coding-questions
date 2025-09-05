@@ -4,15 +4,24 @@ const Otp = ({ otpLength = 6 }) => {
   const [otpFields, setOtpFields] = useState(new Array(otpLength).fill(""));
   const ref = useRef([]);
 
-  console.log(ref);
-
   const handleKeydown = (event, index) => {
-    if (isNaN(event.key)) {
+    const key = event.key;
+    const copyOtpFields = [...otpFields];
+
+    if (key === "Backspace") {
+      copyOtpFields[index] = "";
+      setOtpFields(copyOtpFields);
+      index > 0 && ref.current[index - 1].focus();
       return;
     }
-    const copyOtpFields = [...otpFields];
-    copyOtpFields[index] = event.key;
-    ref.current[index + 1].focus();
+    if (isNaN(key)) {
+      return;
+    }
+    copyOtpFields[index] = key;
+
+    if (index < otpFields.length - 1) {
+      ref.current[index + 1].focus();
+    }
     setOtpFields(copyOtpFields);
   };
 
