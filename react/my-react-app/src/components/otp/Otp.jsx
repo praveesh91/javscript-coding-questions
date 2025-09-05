@@ -1,4 +1,5 @@
 import React, { useRef, useState } from "react";
+import { useEffect } from "react";
 
 const Otp = ({ otpLength = 6 }) => {
   const [otpFields, setOtpFields] = useState(new Array(otpLength).fill(""));
@@ -24,6 +25,11 @@ const Otp = ({ otpLength = 6 }) => {
     }
     setOtpFields(copyOtpFields);
   };
+
+  useEffect(() => {
+    ref.current[0].focus();
+    return () => {};
+  }, []);
 
   return (
     <div className="">
