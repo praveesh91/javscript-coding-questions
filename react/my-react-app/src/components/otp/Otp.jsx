@@ -39,7 +39,11 @@ const Otp = ({ otpLength = 6 }) => {
   }, []);
 
   return (
-    <div className="">
+    <div
+      className="flex space-x-2"
+      role="group"
+      aria-label="Enter your one-time password"
+    >
       {otpFields.map((el, index) => {
         return (
           <input
