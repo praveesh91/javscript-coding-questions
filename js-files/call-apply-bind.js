@@ -1,30 +1,17 @@
-Function.prototype.myCall = function (context, ...args) {
+Function.prototype.myCall = function (context = {}, ...args) {
   if (typeof this !== "function") {
     throw new Error(this + "is not callable");
   }
-  context = context || globalThis; // default to global object if context is null/undefined
-  const fnSymbol = Symbol(); // to avoid name collisions
-  context[fnSymbol] = this;
-
-  const result = context[fnSymbol](...args); // spread the arguments
-  delete context[fnSymbol]; // clean up
-  return result;
+  context["fn"] = this;
+  return context.fn();
 };
 
-Function.prototype.myApply = function (context, args) {
+Function.prototype.myApply = function (context, args = []) {
   if (typeof this !== "function") {
     throw new Error(this + "is not callable");
   }
-  context = context || globalThis; // Default to global object if context is null/undefined
-  const fnSymbol = Symbol(); // Create a unique property to avoid conflicts
-  context[fnSymbol] = this; // Temporarily assign the function
-
-  const result = Array.isArray(args)
-    ? context[fnSymbol](...args) // Spread the arguments if array
-    : context[fnSymbol](); // Or call without arguments
-
-  delete context[fnSymbol]; // Clean up
-  return result;
+  context["fn"] = this;
+  return context.fn(...args);
 };
 
 Function.prototype.myBind = function (context, ...args) {
