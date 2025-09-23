@@ -3,7 +3,7 @@ Function.prototype.myCall = function (context = {}, ...args) {
     throw new Error(this + "is not callable");
   }
   context["fn"] = this;
-  return context.fn();
+  return context.fn(args);
 };
 
 Function.prototype.myApply = function (context, args = []) {
