@@ -14,6 +14,7 @@ import Typeahead from "./components/autocomplete";
 import Poll from "./components/poll-widget";
 import ReactFeatures from "./components/react-features/ReactFeatures";
 import Otp from "./components/otp/Otp";
+import NestedFolders from "./components/nested-folder/NestedFolders";
 
 function App() {
   const { NotificationComponent, triggerNotification } = useNotification();
@@ -44,7 +45,8 @@ function App() {
       {/* <Typeahead /> */}
       {/* <Poll /> */}
       {/* <ReactFeatures /> */}
-      <Otp />
+      {/* <Otp /> */}
+      <NestedFolders />
     </>
   );
 }
