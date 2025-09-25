@@ -128,7 +128,7 @@ const Folder = ({ folder }) => {
       {folder.type === "folder" && (
         <span className="flex items-center gap-1.5">{folder.name}</span>
       )}
-      {isOpen && (
+      {
         <ul className="pl-6">
           {folder.type === "folder" &&
             folder.children.map((el) => <Folder folder={el} />)}
@@ -136,7 +136,7 @@ const Folder = ({ folder }) => {
             {folder.type === "file" && folder.name}
           </span>
         </ul>
-      )}
+      }
     </li>
   );
 };
